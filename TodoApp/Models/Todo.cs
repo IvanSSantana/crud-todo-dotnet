@@ -13,15 +13,19 @@ public class ToDo
     public string UserId { get; set; }
 
     [ForeignKey(nameof(UserId))]
+    [Display(Name = "Usuário")]
     public AppUser User { get; set; }
 
     [StringLength(100)]
     [Display(Name = "Título")]
     public string Title { get; set; }
     
+    [Display(Name = "Descrição")]
     public string Description { get; set; }
 
+    [Display(Name = "Concluído")]
     public bool Done { get; set; } = false;
 
-    public DateTime CreatedAt { get; set; } = DateTime.Now;    
+    [Display(Name = "Data de Cadastro")]
+    public DateTime CreatedAt { get; set; } = DateTime.Now; 
 }
