@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TodoApp.ViewModels;
 
@@ -13,7 +14,10 @@ public class LoginVM
     [Required(ErrorMessage = "A senha de acesso é obrigatório!")]
     [DataType(DataType.Password)]
     public string Password { get; set; }
-    public bool RememberMe { get; set; }    
-    public string ReturnUrl { get; set; }
 
+    [Display(Name = "Manter Conectado?")]
+    public bool RememberMe { get; set; } = false;    
+
+    [HiddenInput]
+    public string ReturnUrl { get; set; }
 }
