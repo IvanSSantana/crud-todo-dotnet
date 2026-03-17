@@ -29,10 +29,17 @@ public class UserService : IUserService
 
         if (Helper.IsValidEmail(login.Email))
         {
-            
+            var user = await _userManager.FindByEmailAsync(login.Email);
+
+            if (user != null) userName = user.UserName;
         }
 
         var result = await _signInManager.PasswordSignInAsync(userName, login.Password, login.RememberMe, lockoutOnFailure: true);
+        
+        if (result.Succeeded) _logger.LogInformation($"Usuário '{userName}' acessou o sistema.");
+        if (result.IsLockedOut) _logger.LogWarning($"Usuário '{userName}' está bloqueado.");
+        if (result.IsNotAllowed) _logger.LogWarning($"Usuário '{userName}' está tentando acessar uma área restrita.");
+
         return result;
     }
 

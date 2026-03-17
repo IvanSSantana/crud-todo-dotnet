@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Data;
 using TodoApp.Models;
+using TodoApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,8 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddTransient<IUserService, UserService>();
 
 var app = builder.Build();
 
