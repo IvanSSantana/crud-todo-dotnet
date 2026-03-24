@@ -97,6 +97,7 @@ public class AppDbSeed
                 UserId = users[1].Id,
             },
         };
+        builder.Entity<ToDo>().HasData(toDos); // Insere dados na tabela
         #endregion
     }    
 }

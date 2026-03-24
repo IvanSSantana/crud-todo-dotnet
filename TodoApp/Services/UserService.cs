@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using TodoApp.Data;
 using TodoApp.Helpers;
 using TodoApp.Models;
 using TodoApp.ViewModels;
@@ -11,16 +12,27 @@ public class UserService : IUserService
     private readonly SignInManager<AppUser> _signInManager;
     private readonly UserManager<AppUser> _userManager;
     private readonly ILogger<UserService> _logger;
+    private readonly AppDbContext dbContext;
+    private readonly IHttpContextAccessor httpContextAccessor;
 
     public UserService(
         SignInManager<AppUser> signInManager,
         UserManager<AppUser> userManager,
-        ILogger<UserService> logger
+        ILogger<UserService> logger,
+        AppDbContext dbContext,
+        IHttpContextAccessor httpContextAccessor
     )
     {
         _signInManager = signInManager;
         _userManager = userManager;
         _logger = logger;
+        this.dbContext = dbContext;
+        this.httpContextAccessor = httpContextAccessor;
+    }
+
+    public Task<UserVM> GetLoggedUser()
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<SignInResult> Login(LoginVM login)

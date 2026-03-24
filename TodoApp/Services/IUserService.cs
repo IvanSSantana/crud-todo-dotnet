@@ -6,6 +6,7 @@ namespace TodoApp.Services;
 
 public interface IUserService
 {
+    Task<UserVM> GetLoggedUser();
     Task<SignInResult> Login(LoginVM login);
     Task Logout();
 }
