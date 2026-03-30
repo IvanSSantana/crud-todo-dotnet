@@ -32,17 +32,15 @@ public class AccountController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> LoginAsync(LoginVM login)
     {
-        if (ModelState.IsValid)
-        {
-            var result = await _userService.Login(login);
-
-            if (result.Succeeded) return LocalRedirect(login.ReturnUrl);
-            if (result.IsLockedOut) return RedirectToAction("Lockout");
-            if (result.IsNotAllowed) return RedirectToAction("AcessDenied");
-
-            ModelState.AddModelError("", "Usuário e/ou senha inválidos.");
-        } 
+        if (!ModelState.IsValid) TempData["Failure"] = "Dados inválidos. Verifique os campos preenchidos.";
         
+        var result = await _userService.Login(login);
+
+        if (result.Succeeded) TempData["Sucess"] = "Login realizado com sucesso! Redirecionando...";
+        else if (result.IsLockedOut) TempData["Failure"] = "Usuário bloqueado por muitas tentativas.";
+        else if (result.IsNotAllowed) TempData["Failure"] = "Usuário sem permissão para acessar o sistema.";
+        else TempData["Failure"] = "E-mail ou senha incorretos. Tente novamente.";
+
         return View(login);
         
     }
