@@ -42,21 +42,16 @@ public class AccountController : Controller
         else TempData["Failure"] = "E-mail ou senha incorretos. Tente novamente.";
 
         return View(login);
-        
     }
     
-    public IActionResult Logout()
+    [HttpPost]
+    public async Task<IActionResult> Logout()
     {
-        return RedirectToAction("Login");
+        await _userService.Logout();
+        return RedirectToAction("Login", "Account");
     }
 
-    public IActionResult Register()
-    {
-        return View();
-    }
+    public IActionResult Register() => View();
 
-    public IActionResult Profile()
-    {
-        return View();
-    }
+    public IActionResult Profile() => View();
 }
