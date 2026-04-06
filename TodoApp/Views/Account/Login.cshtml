@@ -1,6 +1,6 @@
 @model LoginVM
 @{
-Layout = null;
+    Layout = null;
 }
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -27,16 +27,14 @@ Layout = null;
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" aspfor="Password"></label>
+                    <label class="form-label" asp-for="Password"></label>
                     <input class="form-input" asp-for="Password">
                     <span class="error-message" asp-validationfor="Password"></span>
                 </div>
 
                 <div class="remember-forgot">
-                    <label class="remember">
-                        <input type="checkbox" asp-for="RememberMe">
-                        <label class="form-label" aspfor="RememberMe"></label>
-                    </label>
+                    <input type="checkbox" asp-for="RememberMe"></label>
+                    <label class="remember" asp-for="RememberMe"></label>
 
                     <a href="#" class="forgot-password">Esqueceu a senha?</a>
                 </div>
