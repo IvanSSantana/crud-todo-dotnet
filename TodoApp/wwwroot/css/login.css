@@ -124,6 +124,7 @@ body {
     align-items: center;
     gap: 0.5rem;
     color: #666;
+    margin-right: 37%;
 }
 
 .forgot-password {
