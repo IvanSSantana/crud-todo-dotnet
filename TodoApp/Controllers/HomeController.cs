@@ -6,6 +6,7 @@ using TodoApp.Data;
 using TodoApp.Services;
 using Microsoft.EntityFrameworkCore;
 using TodoApp.ViewModels;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace TodoApp.Controllers;
 
@@ -43,6 +44,44 @@ public class HomeController : Controller
             ToDos = openTodos
         };
         return View(homeVM);
+    }
+
+    public IActionResult AddTask()
+    {
+        return View();  
+    } 
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddTask(AddTaskVM addTask)
+    {   
+
+        var user = await _userService.GetLoggedUser();
+
+        if (user == null)
+        {
+            TempData["Failure"] = "Sua sessão expirou, faça login novamente!";
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return View(addTask);
+        }
+
+        ToDo toDo = new()
+            {
+                Title = addTask.Title,
+                Description = addTask.Description,
+                UserId = user.Id
+            };
+
+            await _dbContext.ToDos.AddAsync(toDo);
+            await _dbContext.SaveChangesAsync();
+
+            TempData["Success"] = "Tarefa criada com sucesso! Redirecionando...";
+
+            return View(addTask);
+        }
     }
 
     [HttpPost]
